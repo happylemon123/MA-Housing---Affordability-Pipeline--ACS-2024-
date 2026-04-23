@@ -258,9 +258,13 @@ def main() -> int:
                 break
         return picked
 
-    examples = []
+    examples_latest = []
     for cat in ["price-driven", "income-driven", "both-high", "both-low"]:
-        examples.extend(pick(cat))
+        examples_latest.extend(pick(cat))
+
+    picked_geoids = {r.geoid for r in examples_latest}
+    examples = [r for r in rows if r.geoid in picked_geoids]
+    examples.sort(key=lambda r: (r.geoid, r.year))
 
     table_path = Path(args.outdir) / "ma_price_income_examples.csv"
     with table_path.open("w", newline="", encoding="utf-8") as f:

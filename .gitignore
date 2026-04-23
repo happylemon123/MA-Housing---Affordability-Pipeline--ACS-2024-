@@ -1,0 +1,26 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+.Rhistory
+
+# Specific to this project
+# Ignore everything in out/ to avoid huge CSVs, EXCEPT what the user wants:
+out/*
+!out/ma_acs_2020_24_county_friendly.csv
+!out/plots/

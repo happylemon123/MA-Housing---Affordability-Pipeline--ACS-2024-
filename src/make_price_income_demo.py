@@ -172,6 +172,8 @@ def main() -> int:
     }
 
     xs, ys, cs = [], [], []
+    from collections import defaultdict
+    by_county = defaultdict(list)
     for r in rows:
         if r.rent_pressure is None or r.poverty_rate is None:
             continue
@@ -180,8 +182,15 @@ def main() -> int:
         xs.append(r.rent_pressure)
         ys.append(r.poverty_rate)
         cs.append(colors.get(cat, "#cccccc"))
+        by_county[r.geoid].append(r)
 
     plt.figure(figsize=(10, 6))
+    for geoid, c_rows in by_county.items():
+        c_rows.sort(key=lambda x: x.year)
+        c_xs = [x.rent_pressure for x in c_rows]
+        c_ys = [x.poverty_rate for x in c_rows]
+        plt.plot(c_xs, c_ys, color="gray", linewidth=0.5, alpha=0.4)
+
     plt.scatter(xs, ys, c=cs, alpha=0.85, edgecolors="none")
     plt.axhline(pr_cut, color="#444444", linewidth=1.0, linestyle="--")
     plt.axvline(rp_cut, color="#444444", linewidth=1.0, linestyle="--")
@@ -209,6 +218,7 @@ def main() -> int:
 
     # Scatter: owner cost pressure (with mortgage) vs poverty rate.
     xs, ys, cs = [], [], []
+    by_county2 = defaultdict(list)
     for r in rows:
         if r.owner_cost_pressure_with_mortgage is None or r.poverty_rate is None:
             continue
@@ -217,8 +227,15 @@ def main() -> int:
         xs.append(r.owner_cost_pressure_with_mortgage)
         ys.append(r.poverty_rate)
         cs.append(colors.get(cat, "#cccccc"))
+        by_county2[r.geoid].append(r)
 
     plt.figure(figsize=(10, 6))
+    for geoid, c_rows in by_county2.items():
+        c_rows.sort(key=lambda x: x.year)
+        c_xs = [x.owner_cost_pressure_with_mortgage for x in c_rows]
+        c_ys = [x.poverty_rate for x in c_rows]
+        plt.plot(c_xs, c_ys, color="gray", linewidth=0.5, alpha=0.4)
+
     plt.scatter(xs, ys, c=cs, alpha=0.85, edgecolors="none")
     plt.axhline(pr_cut, color="#444444", linewidth=1.0, linestyle="--")
     plt.title("MA counties (ACS1 2021–2024): owner-cost pressure (with mortgage) vs poverty (proxy)")

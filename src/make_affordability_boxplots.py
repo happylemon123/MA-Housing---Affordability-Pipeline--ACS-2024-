@@ -60,7 +60,10 @@ def main() -> int:
         out = []
         for y in years:
             vals = [fnum(r.get(col)) for r in rows if int(r["year"]) == y]
-            out.append([v for v in vals if v is not None])
+            if 'burden' in col:
+                out.append([v * 100.0 for v in vals if v is not None])
+            else:
+                out.append([v for v in vals if v is not None])
         return out
 
     metrics = [

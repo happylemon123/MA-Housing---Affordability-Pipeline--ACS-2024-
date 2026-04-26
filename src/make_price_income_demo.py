@@ -128,7 +128,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Make a simple price-driven vs income-driven demo (MA counties).")
     ap.add_argument(
         "--input",
-        default="census_ma_2024_tableau/out/ma_acs_2020_24_county_friendly.csv",
+        default="out/countried related update.csv",
         help="Input friendly county CSV",
     )
     ap.add_argument("--outdir", default="census_ma_2024_tableau/out/plots")

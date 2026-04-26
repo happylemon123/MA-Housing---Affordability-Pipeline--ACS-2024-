@@ -23,7 +23,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="Box plots for affordability metrics across counties (by year).")
     ap.add_argument(
         "--input",
-        default="census_ma_2024_tableau/out/ma_acs_2020_24_county_friendly.csv",
+        default="out/countried related update.csv",
         help="Friendly county CSV",
     )
     ap.add_argument("--dataset", default="acs1", help="acs1 or acs5")
